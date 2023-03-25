@@ -1,12 +1,19 @@
 # Memory_Game_Public_Demo
 This is a repo for a game i made by adding some Css and Javascript.
+The Live webpage for this game is using [GitHub Pages](https://pages.github.com/)
+
 
 ## How To Play
+
 When you run the html file or open the hosted page, you are prompted to type a number of color pairs of cards that you would like to start with. Currently you can go as high as 24 pairs meaning you will have 48 cards max on the webpage if you were to type 24.
+
+![This should be a picture of the website when you try pick all 24 pairs]imgs/Screenshot_Memory_Game.png)
 
 Simply click or press the cards to reveal their color, and match with its pair to get closer to the end of the game.
 
 Once you have revealed and matched the last pair, you will get an alert that the game has ended.
+
+Click **[>here<](https://papontem.github.io/Memory_Game_Public_Demo/)** to start the game within github pages.
 
 ## ToDo:
 This is a list of things i'd like to implement as i get better at software development.
@@ -23,5 +30,5 @@ This is a list of things i'd like to implement as i get better at software devel
     - Change the back side of the cards to any img
     - Change the font style of the page
     - Change the style of the time keeper
-    
+
         
