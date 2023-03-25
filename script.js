@@ -59,9 +59,9 @@ function createCOLORS() {
 }
 
 // implementing a do while loop for the game, so as to not need to reload page...
-do {
-	gameContinue = prompt("would you like to play again? yes or no");
-} while (gameContinue[0] === "y");
+// do {
+// 	gameContinue = prompt("would you like to play again? yes or no");
+// } while (gameContinue[0] === "y");
 
 // put game code in here
 createCOLORS();
