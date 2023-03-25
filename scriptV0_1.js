@@ -1,25 +1,77 @@
-// alert("This is The javaScript File for our Memory Game Challenge!");
+const gameContainer = document.getElementById("gameBoard");
+const COLORS = [];
+let gameContinue;
 
-const gameContainer = document.getElementById("game");
+let customCardBackground =
+	"radial-gradient(circle at 50%,#000000 25%,#ff0000 50%,#000000 75%,#000000 75%)";
+//function that creates colors array
+function createCOLORS() {
+	console.log("Creating colors");
+	let arrayColors = [
+		"Red",
+		"Yellow",
+		"Green",
+		"Blue",
+		"Purple",
+		"Orange",
+		"Pink",
+		"Brown",
+		"turquoise",
+		"magenta",
+		"indigo",
+		"teal",
+		"beige",
+		"maroon",
+		"navy",
+		"olive",
+		"cyan",
+		"peachpuff",
+		"gold",
+		"skyblue",
+		"chocolate",
+		"black",
+		"grey",
+		"white",
+	];
+	let colorCount = prompt(
+		`How many color pairs would you like to play with? you can pick any number from 1 to ${arrayColors.length} `
+	);
+	if (colorCount <= 0) {
+		console.log("pick at least 1 bro");
+		alert("pick at least 1 bro");
+		createCOLORS();
+	} else if (colorCount === 1) {
+		COLORS = [colorArray[0], colorArray[0]];
+	} else if (colorCount > 1 && colorCount <= 24) {
+		// TODO: LOGIC TO PLAY THE GAME WILL GO HERE
+		for (let i = 0; i < colorCount; i++) {
+			console.log("i:", i, arrayColors[i]);
+			COLORS.push(arrayColors[i]);
+		}
+		for (let i = 0; i < colorCount; i++) {
+			console.log("i:", i);
+			COLORS.push(arrayColors[i]);
+		}
+	} else {
+		alert("Not A valid Input!");
+		createCOLORS();
+	}
+}
 
-const COLORS = [
-	"red",
-	"blue",
-	"green",
-	"orange",
-	"purple",
-	"red",
-	"blue",
-	"green",
-	"orange",
-	"purple",
-];
+// implementing a do while loop for the game, so as to not need to reload page...
+// do {
+// 	gameContinue = prompt("would you like to play again? yes or no");
+// } while (gameContinue[0] === "y");
 
-/**
- * Here is a helper function to shuffle an array
- * It returns the same array with values shuffled
- * It is based on an algorithm called Fisher Yates if you want to research more
- */
+// put game code in here
+createCOLORS();
+
+let finalCountDown = COLORS.length;
+console.log("finalCountDown:", finalCountDown);
+
+// here is a helper function to shuffle an array
+// it returns the same array with values shuffled
+// it is based on an algorithm called Fisher Yates if you want ot research more
 function shuffle(array) {
 	let counter = array.length;
 
@@ -41,19 +93,26 @@ function shuffle(array) {
 }
 
 let shuffledColors = shuffle(COLORS);
-/**
- * This function loops over the array of colors
- * It creates a new div and gives it a class with the value of the color
- * It also adds an event listener for a click for each card
- */
+
+// this function loops over the array of colors
+// it creates a new div and gives it a class with the value of the color
+// it also adds an event listener for a click for each card
+// PAM: TODO: ADD MY OWN IMG
 function createDivsForColors(colorArray) {
 	for (let color of colorArray) {
 		// create a new div
 		const newDiv = document.createElement("div");
 
-		// give it a class attribute for the value we are looping over
-		newDiv.classList.add(color);
+		// // create a new img
+		// let imgUrl = "https://imgur.com/a/dLBRQyH";
+		// const newImg = document.createElement("img");
+		// newImg.setAttribute("src", imgUrl);
+		// // give newDiv the new img as a child
+		// newDiv.append(newImg);
 
+		// give newDiv a class attribute for the value we are looping over
+		newDiv.classList.add(color);
+		newDiv.style.background = customCardBackground;
 		// call a function handleCardClick when a div is clicked on
 		newDiv.addEventListener("click", handleCardClick);
 
@@ -62,84 +121,96 @@ function createDivsForColors(colorArray) {
 	}
 }
 
-// TODO: Implement this function!
-/**
- * Clicking a card should change the background color to be the color of the class it has.
- *
- * Users should only be able to change at most two cards at a time.
- *
- * Clicking on two matching cards should be a “match” — those cards should stay face up.
- *
- * When clicking two cards that are not a match, they should stay turned over for at least 1 second before they hide the color again. You should make sure to use a setTimeout so that you can execute code after one second.
- */
-
-// todo: add a way so that no more than two cards can be flipped at a time.
-
-// using an array to keep track of cards that have been flipped
+//saving cards flipped in an array and keeping track of how many are flipped in a countber variable
 let cardsFlipped = [];
-// TODO: use this variable to limit the functionality of clicking more than 2 cards at a time, can probably use an if conditional.
-let areWeClicking = false;
-function handleCardClick(event) {
-	if (areWeClicking) return;
-	// you can use event.target to see which element was clicked
-	console.log("you just clicked", event.target);
-	// changing background color for cards clicked
-	event.target.style.backgroundColor = event.target.getAttribute("class");
-	// if cards flipped lenght growns bigger than 2 we take out first element and add the new card that was flipped to the end
-	console.log("Checking which cards we have flipped");
-	if (cardsFlipped.length > 1) {
-		cardsFlipped.shift();
-		cardsFlipped.push(event.target);
-		console.log("Cards Flipped:", cardsFlipped);
-	} else {
-		cardsFlipped.push(event.target);
-		console.log("Cards Flipped:", cardsFlipped);
-	}
-	// check if cards are a match,
+let countCardsFlipped = 0;
 
-	if (
-		cardsFlipped.length > 1 &&
-		cardsFlipped[0].getAttribute("class") ===
-			cardsFlipped[1].getAttribute("class")
-	) {
-		let card0 = cardsFlipped[0];
-		let card1 = cardsFlipped[1];
-		console.log("MATCHING card 0:", card0);
-		console.log("MATCHING card 1:", card1);
-		console.log("Removing....");
-
-		// let cards stay just remove the event listener from them
-		for (let card of cardsFlipped) {
-			card.removeEventListener("click", handleCardClick);
+//check if card that was clicked has already been pushed into our cards flipped array
+function isCardAlreadyFlipped(checkCard, cardsFlippedArray) {
+	//debuggin
+	console.log(
+		`Checking if card: ${JSON.stringify(
+			checkCard.outerHTML
+		)} \nis already in cards flipped array:`,
+		cardsFlippedArray
+	);
+	for (let i = 0; i < cardsFlippedArray.length; i++) {
+		if (checkCard === cardsFlippedArray[i]) {
+			//if card is already in array return true
+			console.log("It is");
+			return true;
 		}
-
-		// im just removing them i dont need em anymore
-		// HAHA taking this chunk out as a comment made the cards remain on play until its compared again against a card that is not its match.
-		// setTimeout(function () {
-		// 	card0.remove();
-		// 	card1.remove();
-		// 	cardsFlipped.pop();
-		// 	cardsFlipped.pop();
-		// }, 1000);
-	} else if (
-		cardsFlipped.length > 1 &&
-		cardsFlipped[0].getAttribute("class") !==
-			cardsFlipped[1].getAttribute("class")
-	) {
-		// flip cards after a second if they are not a match
-		// change the background to white
-		let card0 = cardsFlipped[0];
-		let card1 = cardsFlipped[1];
-		setTimeout(function () {
-			card0.style.backgroundColor = "white";
-			card1.style.backgroundColor = "white";
-		}, 1000);
 	}
-	// now in the end of move reset cards flipped
-	if (cardsFlipped.length > 1) {
-		cardsFlipped = [];
+	// card is not in the array return false
+	console.log("It is Not");
+	return false;
+}
+
+//function to check if cards in card array are a match
+function handleFlippedCards() {
+	card0 = cardsFlipped[0];
+	card1 = cardsFlipped[1];
+	console.log("Are these cards a Match?", cardsFlipped);
+
+	if (card0.getAttribute("class") === card1.getAttribute("class")) {
+		// its a match remove event listeners
+		console.log("Yes its a match! Removing click events...");
+		card0.removeEventListener("click", handleCardClick);
+		card1.removeEventListener("click", handleCardClick);
+		finalCountDown -= 2;
+		console.log("finalCountDown:", finalCountDown);
+	} else {
+		// not a match -> therefore change the style of the cards back to the default
+		console.log("No match.");
+
+		cardsFlipped[0].style.backgroundColor = null;
+		cardsFlipped[1].style.backgroundColor = null;
+		cardsFlipped[0].style.background = customCardBackground;
+		cardsFlipped[1].style.background = customCardBackground;
+	}
+	// whatever happens return my count and array back to defaults
+	cardsFlipped = [];
+	countCardsFlipped = 0;
+}
+
+function handleCardClick(event) {
+	// check if we are flipping more than one card
+	if (countCardsFlipped === 2) {
+		// exit the function
+		console.log("You Can't Flip More Than One Card At A Time.");
+		return;
+	}
+	// you can use event.target to see which element was clicked
+	let clickedCard = event.target;
+	console.log("you clicked", clickedCard); //debuggin
+	// check if the card we clicked has already been pushed into our array
+	if (isCardAlreadyFlipped(clickedCard, cardsFlipped)) {
+		//exit the function
+		console.log("This card has already been flipped!");
+		return;
+	}
+	// set the color of card flipped, to reveal its color
+	clickedCard.style.background = "rgba(0,0,0,0)";
+	clickedCard.style.backgroundColor = clickedCard.getAttribute("class");
+	// push the card into our card array
+	cardsFlipped.push(clickedCard);
+	console.log("Cards Flipped:", cardsFlipped); //debuggin
+	// couldnt get card array length when it was zero so instead im using a countber variable
+	countCardsFlipped++;
+
+	//FINALLY
+	// if this is the second card we are flipping compare the cards using our resolveFlippedCards function
+	if (countCardsFlipped === 2) {
+		setTimeout(function () {
+			handleFlippedCards();
+			if (finalCountDown === 0) {
+				console.log("GAME OVER");
+				alert("Game should be done by now i think....");
+			}
+		}, 1000);
 	}
 }
 
 // when the DOM loads
 createDivsForColors(shuffledColors);
+console.log("Colors Shuffled Ready to start game");
