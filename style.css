@@ -1,0 +1,72 @@
+body {
+	font-family: "Smokum", cursive, "BIZ UDPGothic", sans-serif;
+}
+h1 {
+	text-align: center;
+	font-size: 4em;
+	letter-spacing: +5px;
+	color: aliceblue;
+}
+div#gameBoard {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+div#gameBoard div {
+	width: 15%;
+	height: 200px;
+	margin: 10px;
+	display: inline-block;
+	border: 1px solid rgb(255, 255, 255);
+	border-radius: 4px;
+	transition: background 0.1s ease-in, background-color 0.1s ease-in;
+}
+
+div#gameBoard div:hover {
+	background-color: rgba(255, 255, 255, 0.5);
+	outline: solid rgb(0, 255, 64) 4px;
+}
+img#background {
+	position: absolute;
+	opacity: 0.9;
+	top: 0;
+	left: 0;
+	width: 100%;
+	object-fit: fill;
+	border-radius: 0px;
+	z-index: -1;
+}
+footer section.Footer_Content {
+	color: var(--color2);
+	font-size: 3em;
+	font-family: "Smokum", cursive, "BIZ UDPGothic", sans-serif;
+}
+/* color database */
+:root {
+	background-color: var(--color1);
+	--color0: grey;
+	--color1: black;
+	--color2: white;
+	--color3: Red;
+	--color4: Orange;
+	--color5: Yellow;
+	--color6: Green;
+	--color7: Blue;
+	--color8: Purple;
+	--color9: Pink;
+	--color10: Brown;
+	--color11: turquoise;
+	--color12: magenta;
+	--color13: indigo;
+	--color14: teal;
+	--color15: beige;
+	--color16: maroon;
+	--color17: navy;
+	--color18: olive;
+	--color19: cyan;
+	--color20: peachpuff;
+	--color21: gold;
+	--color22: skyblue;
+	--color23: chocolate;
+}
